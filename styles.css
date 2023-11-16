@@ -2,7 +2,7 @@
     --clr-base-blue: 0, 81, 255;
     --clr-primary-blue: rgb(var(--clr-base-blue));
     
-    --clr-base-red: 255, 0, 0;
+    --clr-base-red: 200, 13, 13;
     --clr-primary-red: rgb(var(--clr-base-red));
 
     --clr-alpha: 0.7;
@@ -24,6 +24,7 @@
     /* border: 1px solid red; */
 }
 
+body { background-color: var(--clr-neutral-white); }
 
 
 /* Navigation */
@@ -145,7 +146,12 @@ nav a:hover {
     grid-row: 2 / 3;
     z-index: 10;
     box-shadow: 
-        0 0 3em var(--clr-neutral-black);
+        0 0 4em var(--clr-neutral-black);
+}
+
+.ttScore {
+    position: relative;
+    width: 100%;
 }
 
 .ttScore.ttLeftside {
@@ -163,6 +169,55 @@ nav a:hover {
     height: 100%;
     border-left: 1px solid white;
 }
+
+.ttSets {
+    background-color: var(--clr-neutral-white);
+    width: 5em;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: -5%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0.5em 2em var(--clr-neutral-black);
+}
+
+.ttSets span {
+    font-size: 4em;
+    color: var(--clr-neutral-black);
+}
+
+.ttService {
+    background-color: var(--clr-neutral-white);
+    color: var(--clr-neutral-grey);
+    font-size: 1.5em;
+    font-weight: 700;
+
+    padding: 0.5em 2em;
+    border-radius: 2em;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, -50%);
+}
+
+.ttScoreCount {
+    color: var(--clr-neutral-white);
+    font-size: 10em;
+    font-weight: 400;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.ttNotServing {
+    display: none ;
+}
+
 
 
 
