@@ -176,13 +176,21 @@ nav a:hover {
     aspect-ratio: 1;
     border-radius: 50%;
     position: absolute;
-    left: 50%;
-    top: -5%;
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0 0.5em 2em var(--clr-neutral-black);
+}
+
+.ttScore .ttSets {
+    left: 50%;
+    top: -5%;
+}
+
+.ttSets.ttUndo {
+    left: 50%;
+    bottom: 5%;
 }
 
 .ttSets span {
