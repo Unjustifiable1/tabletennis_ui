@@ -59,13 +59,14 @@ const btnMenu = document.getElementById('ttMenu');
 const btnOptions = document.getElementById('ttOptions');
 const menuMode = document.getElementById('ttMenuMode');
 const menuGames = document.getElementById('ttMenuGames');
+const menuGamesNum = document.getElementById('ttMenuGames').getElementsByTagName('span');
 const menuSets = document.getElementById('ttMenuSets');
 const menuSwap = document.getElementById('ttMenuSwap');
 const menuService = document.getElementById('ttMenuService');
 
 
 
-// DOM INTERACTIONS
+// DOM INTERACTIONS - GAME SCORES
 
 team1Score.onclick = () => {
     setCurrentScoreTeam1();
@@ -82,8 +83,17 @@ team2Score.onclick = () => {
 
 
 
-// OPTIONS MENU
+// DOM INTERACTIONS - OPTIONS MENU
 
+menuGames.onclick = () => {
+    if (DEFAULT_GAMES.length - 1 == DEFAULT_GAMES.indexOf(optionTotalGames)) {
+        setOptionTotalGames(DEFAULT_GAMES[0]);
+        menuGamesNum[0].textContent = optionTotalGames;
+    } else {
+        setOptionTotalGames(DEFAULT_GAMES[DEFAULT_GAMES.indexOf(optionTotalGames) + 1]);
+        menuGamesNum[0].textContent = optionTotalGames;
+    }
+}
 
 
 
