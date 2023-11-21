@@ -44,6 +44,9 @@ const setOptionServerChange = (newService) => optionServerChange = newService;
 
 
 // DOM SELECTORS
+
+const team1 = document.getElementById('ttTeamOne');
+const team2 = document.getElementById('ttTeamTwo');
 const team1Score = document.getElementById('ttTeam1Score');
 const team2Score = document.getElementById('ttTeam2Score');
 const team1Sets = document.getElementById('ttTeam1Sets');
@@ -53,6 +56,7 @@ const team2Service = document.getElementById('ttTeam2Service');
 const btnUndo = document.getElementById('ttUndo');
 const btnReset = document.getElementById('ttReset');
 const btnMenu = document.getElementById('ttMenu');
+const btnOptions = document.getElementById('ttOptions');
 const menuMode = document.getElementById('ttMenuMode');
 const menuGames = document.getElementById('ttMenuGames');
 const menuSets = document.getElementById('ttMenuSets');
@@ -62,6 +66,17 @@ const menuService = document.getElementById('ttMenuService');
 
 
 // DOM INTERACTIONS
+
+team1Score.onclick = () => {
+    setCurrentScoreTeam1();
+    team1Score.textContent = currentScoreTeam1;
+} 
+
+team2Score.onclick = () => {
+    setCurrentScoreTeam2();
+    team2Score.textContent = currentScoreTeam2;
+} 
+
 
 
 
@@ -92,7 +107,7 @@ const menuService = document.getElementById('ttMenuService');
 
 
 // SHOW/HIDE OPTIONS MENU
-function ttOptions() {
+btnOptions.onclick = () => {
     if (btnMenu.style.display === "block") {
         btnMenu.style.display = "none";
     } else {
