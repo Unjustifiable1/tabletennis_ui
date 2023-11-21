@@ -1,8 +1,8 @@
 // Tabletennis UI
 
 
-// SET VARIABLES
-const DEFAULT_SCORE = "0";
+// SETUP DEFAULT VARIABLES
+const DEFAULT_SCORE = 0;
 const DEFAULT_SERVICE = ["team1", "team2"];
 const DEFAULT_MODE = ["singles", "doubles"];
 const DEFAULT_GAMES = ['11', '21'];
@@ -25,9 +25,26 @@ let optionServerChange = DEFAULT_SERVER_CHANGE[0];
 
 
 
+// SET VARIABLES
+
+const setCurrentScoreTeam1 = () => currentScoreTeam1 += 1;
+const setCurrentScoreTeam2 = () => currentScoreTeam2 += 1;
+const setCurrentSetPointTeam1 = () => currentSetPointTeam1 += 1;
+const setCurrentSetPointTeam2 = () => currentSetPointTeam2 += 1;
+
+const setCurrentSet = () => currentSet += 1;
+const setCurrentGame = () => currentGame += 1;
+const setCurrentService = (newServer) => currentService = newServer;
+
+const setOptionMode = (newMode) => optionMode = newMode;
+const setOptionTotalGames = (newGames) => optionTotalGames = newGames;
+const setOptionTotalSets = (newSets) => optionTotalSets = newSets;
+const setOptionServerChange = (newService) => optionServerChange = newService;
+
+
 
 // DOM SELECTORS
-
+const team1Score = document.getElementById('ttTeam1Score');
 
 
 
