@@ -62,12 +62,12 @@ const btnMenu = document.getElementById('ttMenu');
 const btnOptions = document.getElementById('ttOptions');
 const menuMode = document.getElementById('ttMenuMode');
 const menuGames = document.getElementById('ttMenuGames');
-const menuGamesNum = menuGames.getElementsByTagName('span');
+const menuGamesNum = menuGames.getElementsByTagName('span')[0];
 const menuSets = document.getElementById('ttMenuSets');
-const menuSetsNum = menuSets.getElementsByTagName('span');
+const menuSetsNum = menuSets.getElementsByTagName('span')[0];
 const menuSwap = document.getElementById('ttMenuSwap');
-const menuSwapOpt = menuSwap.getElementsByTagName('span');
-const menuService = document.getElementById('ttMenuService').getElementsByTagName('span');
+const menuSwapOpt = menuSwap.getElementsByTagName('span')[0];
+const menuService = document.getElementById('ttMenuService').getElementsByTagName('span')[0];
 
 
 
@@ -93,30 +93,34 @@ team2Score.onclick = () => {
 menuGames.onclick = () => {
     if (DEFAULT_GAMES.length - 1 == DEFAULT_GAMES.indexOf(optionTotalGames)) {
         setOptionTotalGames(DEFAULT_GAMES[0]);
-        menuGamesNum[0].textContent = optionTotalGames;
+        menuGamesNum.textContent = optionTotalGames;
+        setOptionServerChange(DEFAULT_SERVER_CHANGE[0]);
+        menuService.textContent = optionServerChange;
     } else {
         setOptionTotalGames(DEFAULT_GAMES[DEFAULT_GAMES.indexOf(optionTotalGames) + 1]);
-        menuGamesNum[0].textContent = optionTotalGames;
+        menuGamesNum.textContent = optionTotalGames;
+        setOptionServerChange(DEFAULT_SERVER_CHANGE[1]);
+        menuService.textContent = optionServerChange;
     }
 }
 
 menuSets.onclick = () => {
     if (DEFAULT_SETS.length - 1 == DEFAULT_SETS.indexOf(optionTotalSets)) {
         setOptionTotalSets(DEFAULT_SETS[0]);
-        menuSetsNum[0].textContent = optionTotalSets;
+        menuSetsNum.textContent = optionTotalSets;
     } else {
         setOptionTotalSets(DEFAULT_SETS[DEFAULT_SETS.indexOf(optionTotalSets) + 1]);
-        menuSetsNum[0].textContent = optionTotalSets;
+        menuSetsNum.textContent = optionTotalSets;
     }
 }
 
 menuSwap.onclick = () => {
     if (optionSwap == DEFAULT_SWAP[0]) {
         setOptionSwap(DEFAULT_SWAP[1]);
-        menuSwapOpt[0].textContent = optionSwap;
+        menuSwapOpt.textContent = optionSwap;
     } else {
         setOptionSwap(DEFAULT_SWAP[0]);
-        menuSwapOpt[0].textContent = optionSwap;
+        menuSwapOpt.textContent = optionSwap;
     }
 }
 
