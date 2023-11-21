@@ -247,7 +247,7 @@ nav a:hover {
   
   /* Hide the links inside the navigation menu (except for logo/home) */
   .ttTopNav #ttMenu {
-    display: none;
+    display: block;
   }
   
   /* Style navigation menu links */
