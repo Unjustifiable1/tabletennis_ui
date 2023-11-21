@@ -29,13 +29,13 @@ let optionSwap = DEFAULT_SWAP[0];
 
 // SET VARIABLES
 
-const setCurrentScoreTeam1 = () => currentScoreTeam1 += 1;
-const setCurrentScoreTeam2 = () => currentScoreTeam2 += 1;
-const setCurrentSetPointTeam1 = () => currentSetPointTeam1 += 1;
-const setCurrentSetPointTeam2 = () => currentSetPointTeam2 += 1;
+const setCurrentScoreTeam1 = () => currentScoreTeam1 ++;
+const setCurrentScoreTeam2 = () => currentScoreTeam2 ++;
+const setCurrentSetPointTeam1 = () => currentSetPointTeam1 ++;
+const setCurrentSetPointTeam2 = () => currentSetPointTeam2 ++;
 
-const setCurrentSet = () => currentSet += 1;
-const setCurrentGame = () => currentGame += 1;
+const setCurrentSet = () => currentSet ++;
+const setCurrentGame = () => currentGame ++;
 const setCurrentService = (newServer) => currentService = newServer;
 
 const setOptionMode = (newMode) => optionMode = newMode;
@@ -76,11 +76,15 @@ const menuService = document.getElementById('ttMenuService').getElementsByTagNam
 team1Score.onclick = () => {
     setCurrentScoreTeam1();
     team1Score.textContent = currentScoreTeam1;
+    gamePlay();
+    gameWinner(currentScoreTeam1);
 } 
 
 team2Score.onclick = () => {
     setCurrentScoreTeam2();
     team2Score.textContent = currentScoreTeam2;
+    gamePlay();
+    gameWinner(currentScoreTeam2);
 } 
 
 
@@ -127,9 +131,23 @@ menuSwap.onclick = () => {
 
 
 
-// GAME SCORING
+// GAME PLAY CONTROL
 
+const gameWinner = (currentScore) => {
+    if (currentScore == optionTotalGames) {
+        console.log("Winner");
+        resetGameNum();
+        resetTeamScores();
+        setCurrentSet();
+        return true;
+    }
+}
 
+const gamePlay = () => {
+    setCurrentGame();
+    console.log("Current Game: " + currentGame);
+    console.log("Current Score: " + currentScoreTeam1 + " v " + currentScoreTeam2);
+}
 
 
 // SET CHANGE
@@ -141,7 +159,14 @@ menuSwap.onclick = () => {
 
 
 
-// 
+// GAME RESETS
+
+const resetGameNum = () => currentGame = DEFAULT_SCORE;
+const resetTeamScores = () => {
+    currentScoreTeam1 = DEFAULT_SCORE;
+    currentScoreTeam2 = DEFAULT_SCORE;
+}
+
 
 
 
