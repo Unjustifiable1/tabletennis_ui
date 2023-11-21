@@ -17,6 +17,8 @@
     <link type="image/png" sizes="16x16" rel="icon" href="./icons8-ninja-ios-16-16.png">
     <link type="image/png" sizes="32x32" rel="icon" href="./icons8-ninja-ios-16-32.png">
     <link type="image/png" sizes="96x96" rel="icon" href="./icons8-ninja-ios-16-96.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -35,14 +37,29 @@
     <main>
         <h1>Tabletennis</h1>
         <div id="tabletennis_ui">
-            <section class="ttTableSection ttLeftside ttThemeOne">
-                <div class="ttPlayer ttPlayer1">Player 1 zzzxxxxxxxxxxzzzzzz Team 1</div>
+
+            <div class="ttTopNav">
+                <a href="#reset" class="ttActiveMenu">RESET</a>
+                <!-- Navigation links (hidden by default) -->
+                <div id="ttMenu">
+                    <a href="#news">Singles|Doubles</a>
+                    <a href="#contact">Swap Sides?</a>
+                    <a href="#about">Other</a>
+                </div>
+                <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+                <a href="javascript:void(0);" class="ttOptionsIcon" onclick="ttOptions()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+
+            <section id="ttTeamOne" class="ttTableSection ttLeftside ttThemeOne">
+                <div class="ttPlayer ttPlayer1">Player 1 Team 1</div>
                 <div class="ttPlayer ttPlayer3">Player 3 Team 1</div>
             </section>
 
-            <section class="ttTableSection ttRightside ttThemeTwo">
+            <section id="ttTeamOne" class="ttTableSection ttRightside ttThemeTwo">
                 <div class="ttPlayer ttPlayer2">Player 2 Team 2</div>
-                <div class="ttPlayer ttPlayer4">Player 4 zzzxxxxxxxxxxzzzzzz Team 2</div>
+                <div class="ttPlayer ttPlayer4">Player 4 Team 2</div>
             </section>
 
             <section class="ttScoreSection">
