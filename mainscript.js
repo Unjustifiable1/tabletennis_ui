@@ -8,6 +8,7 @@ const DEFAULT_MODE = ["singles", "doubles"];
 const DEFAULT_GAMES = ['11', '21'];
 const DEFAULT_SETS = ['3', '5', '7'];
 const DEFAULT_SERVER_CHANGE = ['2', '5'];
+const DEFAULT_SWAP = ['YES', 'NO'];
 
 let currentScoreTeam1 = DEFAULT_SCORE;
 let currentScoreTeam2 = DEFAULT_SCORE;
@@ -22,6 +23,7 @@ let optionMode = DEFAULT_MODE[0];
 let optionTotalGames = DEFAULT_GAMES[0];
 let optionTotalSets = DEFAULT_SETS[0];
 let optionServerChange = DEFAULT_SERVER_CHANGE[0];
+let optionSwap = DEFAULT_SWAP[0];
 
 
 
@@ -40,6 +42,7 @@ const setOptionMode = (newMode) => optionMode = newMode;
 const setOptionTotalGames = (newGames) => optionTotalGames = newGames;
 const setOptionTotalSets = (newSets) => optionTotalSets = newSets;
 const setOptionServerChange = (newService) => optionServerChange = newService;
+const setOptionSwap = (newSwap) => optionSwap = newSwap;
 
 
 
@@ -59,10 +62,12 @@ const btnMenu = document.getElementById('ttMenu');
 const btnOptions = document.getElementById('ttOptions');
 const menuMode = document.getElementById('ttMenuMode');
 const menuGames = document.getElementById('ttMenuGames');
-const menuGamesNum = document.getElementById('ttMenuGames').getElementsByTagName('span');
+const menuGamesNum = menuGames.getElementsByTagName('span');
 const menuSets = document.getElementById('ttMenuSets');
+const menuSetsNum = menuSets.getElementsByTagName('span');
 const menuSwap = document.getElementById('ttMenuSwap');
-const menuService = document.getElementById('ttMenuService');
+const menuSwapOpt = menuSwap.getElementsByTagName('span');
+const menuService = document.getElementById('ttMenuService').getElementsByTagName('span');
 
 
 
@@ -94,6 +99,27 @@ menuGames.onclick = () => {
         menuGamesNum[0].textContent = optionTotalGames;
     }
 }
+
+menuSets.onclick = () => {
+    if (DEFAULT_SETS.length - 1 == DEFAULT_SETS.indexOf(optionTotalSets)) {
+        setOptionTotalSets(DEFAULT_SETS[0]);
+        menuSetsNum[0].textContent = optionTotalSets;
+    } else {
+        setOptionTotalSets(DEFAULT_SETS[DEFAULT_SETS.indexOf(optionTotalSets) + 1]);
+        menuSetsNum[0].textContent = optionTotalSets;
+    }
+}
+
+menuSwap.onclick = () => {
+    if (optionSwap == DEFAULT_SWAP[0]) {
+        setOptionSwap(DEFAULT_SWAP[1]);
+        menuSwapOpt[0].textContent = optionSwap;
+    } else {
+        setOptionSwap(DEFAULT_SWAP[0]);
+        menuSwapOpt[0].textContent = optionSwap;
+    }
+}
+
 
 
 
