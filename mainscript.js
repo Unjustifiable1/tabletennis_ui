@@ -45,6 +45,19 @@ const setOptionServerChange = (newService) => optionServerChange = newService;
 
 // DOM SELECTORS
 const team1Score = document.getElementById('ttTeam1Score');
+const team2Score = document.getElementById('ttTeam2Score');
+const team1Sets = document.getElementById('ttTeam1Sets');
+const team2Sets = document.getElementById('ttTeam2Sets');
+const team1Service = document.getElementById('ttTeam1Service');
+const team2Service = document.getElementById('ttTeam2Service');
+const btnUndo = document.getElementById('ttUndo');
+const btnReset = document.getElementById('ttReset');
+const btnMenu = document.getElementById('ttMenu');
+const menuMode = document.getElementById('ttMenuMode');
+const menuGames = document.getElementById('ttMenuGames');
+const menuSets = document.getElementById('ttMenuSets');
+const menuSwap = document.getElementById('ttMenuSwap');
+const menuService = document.getElementById('ttMenuService');
 
 
 
@@ -80,10 +93,9 @@ const team1Score = document.getElementById('ttTeam1Score');
 
 // SHOW/HIDE OPTIONS MENU
 function ttOptions() {
-    var x = document.getElementById("ttMenu");
-    if (x.style.display === "block") {
-        x.style.display = "none";
+    if (btnMenu.style.display === "block") {
+        btnMenu.style.display = "none";
     } else {
-        x.style.display = "block";
+        btnMenu.style.display = "block";
     }
 } 

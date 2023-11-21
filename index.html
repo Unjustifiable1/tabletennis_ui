@@ -39,17 +39,15 @@
         <div id="tabletennis_ui">
 
             <div class="ttTopNav">
-                <a href="#reset" class="ttActiveMenu">RESET</a>
-                <!-- Navigation links (hidden by default) -->
+                <a id="ttReset" href="#reset" class="ttActiveMenu">RESET</a>
                 <div id="ttMenu">
-                    <a href="#teams">Singles|Doubles</a>
-                    <a href="#games">Games to <span>11</span></a>
-                    <a href="#sets">Sets best of <span>3</span></a>
-                    <a href="#swap">Swap Sides? <span>YES</span></a>
-                    <a href="#service">Change servers every <span>2</span> points</a>
+                    <a id="ttMenuMode" href="#mode">Singles|Doubles</a>
+                    <a id="ttMenuGames" href="#games">Games to <span>11</span></a>
+                    <a id="ttMenuSets" href="#sets">Sets best of <span>3</span></a>
+                    <a id="ttMenuSwap" href="#swap">Swap Sides? <span>YES</span></a>
+                    <a id="ttMenuService" href="#service">Change servers every <span>2</span> points</a>
                 </div>
-                <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
-                <a href="javascript:void(0);" class="ttOptionsIcon" onclick="ttOptions()">
+                <a href="#options" class="ttOptionsIcon" onclick="ttOptions()">
                     <i class="fa fa-bars"></i>
                 </a>
             </div>
@@ -59,23 +57,23 @@
                 <div class="ttPlayer ttPlayer3">Player 3 Team 1</div>
             </section>
 
-            <section id="ttTeamOne" class="ttTableSection ttRightside ttThemeTwo">
+            <section id="ttTeamTwo" class="ttTableSection ttRightside ttThemeTwo">
                 <div class="ttPlayer ttPlayer2">Player 2 Team 2</div>
                 <div class="ttPlayer ttPlayer4">Player 4 Team 2</div>
             </section>
 
             <section class="ttScoreSection">
                 <div class="ttScore ttLeftside ttThemeOne">
-                    <div class="ttSets ttLeftside"><span>1</span></div>
+                    <div id="ttTeam1Sets" class="ttSets ttLeftside"><span>1</span></div>
                     <div id="ttTeam1Score" class="ttScoreCount ttScoreTeamOne ttLeftside">11</div> 
                     <div id="ttTeam1Service" class="ttService ttLeftside">SERVING</div>
                 </div>
                 <div class="ttScore ttRightside ttThemeTwo">
-                    <div class="ttSets ttRightside"><span>0</span></div>
+                    <div id="ttTeam2Sets" class="ttSets ttRightside"><span>0</span></div>
                     <div id="ttTeam2Score" class="ttScoreCount ttScoreTeamTwo ttRightside">8</div> 
                     <div id="ttTeam2Service" class="ttService ttRightside ttNotServing">SERVING</div>
                 </div>
-                <button class="ttSets ttUndo"><span>-</span></button>
+                <button id="ttUndo" class="ttSets ttUndo"><span>-</span></button>
             </section>
             
         </div>
