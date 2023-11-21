@@ -46,7 +46,7 @@ credit: Image by <a href="https://pixabay.com/users/winterflower-17292963/?utm_s
 # Required actions:
 1. set initial values
     > game scores
-    > max score per set
+    > max game score per set
     > set scores
     > total sets
     > serving position
