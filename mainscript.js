@@ -78,23 +78,13 @@ const menuService = document.getElementById('ttMenuService').getElementsByTagNam
 team1Score.onclick = () => {
     i = 0;
     currentTeam = DEFAULT_TEAMS[i];
-    setCurrentGameScore();
-    updateGameScreen();
     gamePlay();
-    if (currentGameScore[i] >= parseInt(optionTotalGames)-1) {
-        gameWinner(currentGameScore[i]);
-    }
 } 
 
 team2Score.onclick = () => {
     i = 1;
     currentTeam = DEFAULT_TEAMS[i];
-    setCurrentGameScore();
-    updateGameScreen();
     gamePlay();
-    if (currentGameScore[i] >= parseInt(optionTotalGames)-1) {
-        gameWinner(currentGameScore[i]);
-    }
 } 
 
 const updateGameScreen = () => {
@@ -107,48 +97,53 @@ const updateGameScreen = () => {
 }
 
 
-
-
-
-
-
-
 // GAME PLAY CONTROL
 
 const gamePlay = () => {
     setCurrentGame();
+    setCurrentGameScore();
     console.log("Current Game: " + currentGame);
     console.log("Current Score: " + currentGameScore[0] + " v " + currentGameScore[1]);
+    updateGameScreen();
+    if (currentGameScore[i] >= parseInt(optionTotalGames)-1) {
+        gameWinner(currentGameScore[i]);
+    }
 }
 
 const gameWinner = (currentScore) => {
-    if (isSetWon(currentScore)) {
+    isSetWon(currentScore);
+    if (setWon) {
         setCurrentSet();
+        setCurrentSetPoints();
+        updateGameScreen();
         resetGame();
-        alert("Game winner is " + currentTeam);
+        console.log("Game winner is " + currentTeam);
     }
 }
 
 const isSetWon = (currentScore) => {
-    if (isDeuce && !isLeadBy2) {
-        console.log("checking if set is won... it's not")
-        return false;
-    } else if (currentScore >= optionTotalGames && isLeadBy2) {
-        console.log("checking if set is won... not sure, maybe")
-        return true;
+    if (isDeuce() && !isLeadBy2()) {
+        console.log("checking if set is won... it's not");
+        return;
+    } else if (currentScore >= parseInt(optionTotalGames) && isLeadBy2()) {
+        console.log("checking if set is won... winner");
+        setWon = true;
+        return;
     }
 }
 
 const isDeuce = () => {
     if (currentGameScore[0] == currentGameScore[1]) {
+        console.log("Deuce")
         return true;
-    }
+    } else return false;
 }
 
 const isLeadBy2 = () => {
     if (Math.abs(currentGameScore[0] - currentGameScore[1]) >= 2) {
+        console.log("Leading by 2")
         return true;
-    }
+    } else return false;
 }
 
 const isLateGame = () => { //### incomplete logic, not implemented
@@ -177,7 +172,8 @@ const resetTeamScores = () => currentGameScore = [DEFAULT_SCORE, DEFAULT_SCORE];
 const resetGame = () => {
     resetGameNum();
     resetTeamScores();
-
+    // updateGameScreen();
+    setWon = false;
 }
 
 const resetMatch = () => {
