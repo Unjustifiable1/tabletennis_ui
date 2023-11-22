@@ -3,21 +3,25 @@
 
 // SETUP DEFAULT VARIABLES
 const DEFAULT_SCORE = 0;
-const DEFAULT_SERVICE = ["team1", "team2"];
+const DEFAULT_TEAMS = ["Team1", "Team2"];
 const DEFAULT_MODE = ["singles", "doubles"];
 const DEFAULT_GAMES = ['11', '21'];
 const DEFAULT_SETS = ['3', '5', '7'];
 const DEFAULT_SERVER_CHANGE = ['2', '5'];
 const DEFAULT_SWAP = ['YES', 'NO'];
 
-let currentScoreTeam1 = DEFAULT_SCORE;
-let currentScoreTeam2 = DEFAULT_SCORE;
-let currentSetPointTeam1 = DEFAULT_SCORE;
-let currentSetPointTeam2 = DEFAULT_SCORE;
+let currentGameScore = [DEFAULT_SCORE, DEFAULT_SCORE];
+let currentSetPoints = [DEFAULT_SCORE, DEFAULT_SCORE];
 
+let i = DEFAULT_SCORE;  // Current Team Index
+let currentTeam = DEFAULT_TEAMS[i];
 let currentSet = DEFAULT_SCORE;
 let currentGame = DEFAULT_SCORE;
-let currentService = DEFAULT_SERVICE[0];
+let currentService = DEFAULT_TEAMS[i];
+
+let setWon = false;
+let matchWon = false;
+let lateGame = false;
 
 let optionMode = DEFAULT_MODE[0];
 let optionTotalGames = DEFAULT_GAMES[0];
@@ -29,10 +33,8 @@ let optionSwap = DEFAULT_SWAP[0];
 
 // SET VARIABLES
 
-const setCurrentScoreTeam1 = () => currentScoreTeam1 ++;
-const setCurrentScoreTeam2 = () => currentScoreTeam2 ++;
-const setCurrentSetPointTeam1 = () => currentSetPointTeam1 ++;
-const setCurrentSetPointTeam2 = () => currentSetPointTeam2 ++;
+const setCurrentGameScore = () => currentGameScore[i] ++;
+const setCurrentSetPoints = () => currentSetPoints[i] ++;
 
 const setCurrentSet = () => currentSet ++;
 const setCurrentGame = () => currentGame ++;
@@ -52,8 +54,8 @@ const team1 = document.getElementById('ttTeamOne');
 const team2 = document.getElementById('ttTeamTwo');
 const team1Score = document.getElementById('ttTeam1Score');
 const team2Score = document.getElementById('ttTeam2Score');
-const team1Sets = document.getElementById('ttTeam1Sets');
-const team2Sets = document.getElementById('ttTeam2Sets');
+const team1Sets = document.getElementById('ttTeam1Sets').getElementsByTagName('span')[0];
+const team2Sets = document.getElementById('ttTeam2Sets').getElementsByTagName('span')[0];
 const team1Service = document.getElementById('ttTeam1Service');
 const team2Service = document.getElementById('ttTeam2Service');
 const btnUndo = document.getElementById('ttUndo');
@@ -74,21 +76,113 @@ const menuService = document.getElementById('ttMenuService').getElementsByTagNam
 // DOM INTERACTIONS - GAME SCORES
 
 team1Score.onclick = () => {
-    setCurrentScoreTeam1();
-    team1Score.textContent = currentScoreTeam1;
+    i = 0;
+    currentTeam = DEFAULT_TEAMS[i];
+    setCurrentGameScore();
+    updateGameScreen();
     gamePlay();
-    gameWinner(currentScoreTeam1);
+    if (currentGameScore[i] >= parseInt(optionTotalGames)-1) {
+        gameWinner(currentGameScore[i]);
+    }
 } 
 
 team2Score.onclick = () => {
-    setCurrentScoreTeam2();
-    team2Score.textContent = currentScoreTeam2;
+    i = 1;
+    currentTeam = DEFAULT_TEAMS[i];
+    setCurrentGameScore();
+    updateGameScreen();
     gamePlay();
-    gameWinner(currentScoreTeam2);
+    if (currentGameScore[i] >= parseInt(optionTotalGames)-1) {
+        gameWinner(currentGameScore[i]);
+    }
 } 
 
+const updateGameScreen = () => {
+    team1Score.textContent = currentGameScore[0];
+    team2Score.textContent = currentGameScore[1];
+
+    team1Sets.textContent = currentSetPoints[0];
+    team2Sets.textContent = currentSetPoints[1];
+
+}
 
 
+
+
+
+
+
+
+// GAME PLAY CONTROL
+
+const gamePlay = () => {
+    setCurrentGame();
+    console.log("Current Game: " + currentGame);
+    console.log("Current Score: " + currentGameScore[0] + " v " + currentGameScore[1]);
+}
+
+const gameWinner = (currentScore) => {
+    if (isSetWon(currentScore)) {
+        setCurrentSet();
+        resetGame();
+        alert("Game winner is " + currentTeam);
+    }
+}
+
+const isSetWon = (currentScore) => {
+    if (isDeuce && !isLeadBy2) {
+        console.log("checking if set is won... it's not")
+        return false;
+    } else if (currentScore >= optionTotalGames && isLeadBy2) {
+        console.log("checking if set is won... not sure, maybe")
+        return true;
+    }
+}
+
+const isDeuce = () => {
+    if (currentGameScore[0] == currentGameScore[1]) {
+        return true;
+    }
+}
+
+const isLeadBy2 = () => {
+    if (Math.abs(currentGameScore[0] - currentGameScore[1]) >= 2) {
+        return true;
+    }
+}
+
+const isLateGame = () => { //### incomplete logic, not implemented
+    if (currentGameScore[0] >= parseInt(optionTotalGames)-1 && currentGameScore[1] >= parseInt(optionTotalGames)-1) {
+        lateGame = true;
+        return true;
+    }
+}
+
+
+
+// SET CHANGE
+
+
+
+
+// SINGLES / DOUBLES
+
+
+
+// GAME RESETS
+
+const resetGameNum = () => currentGame = DEFAULT_SCORE;
+const resetTeamScores = () => currentGameScore = [DEFAULT_SCORE, DEFAULT_SCORE];
+
+const resetGame = () => {
+    resetGameNum();
+    resetTeamScores();
+
+}
+
+const resetMatch = () => {
+    resetGame();
+}
 
 
 
@@ -127,47 +221,6 @@ menuSwap.onclick = () => {
         menuSwapOpt.textContent = optionSwap;
     }
 }
-
-
-
-
-// GAME PLAY CONTROL
-
-const gameWinner = (currentScore) => {
-    if (currentScore == optionTotalGames) {
-        console.log("Winner");
-        resetGameNum();
-        resetTeamScores();
-        setCurrentSet();
-        return true;
-    }
-}
-
-const gamePlay = () => {
-    setCurrentGame();
-    console.log("Current Game: " + currentGame);
-    console.log("Current Score: " + currentScoreTeam1 + " v " + currentScoreTeam2);
-}
-
-
-// SET CHANGE
-
-
-
-
-// SINGLES / DOUBLES
-
-
-
-// GAME RESETS
-
-const resetGameNum = () => currentGame = DEFAULT_SCORE;
-const resetTeamScores = () => {
-    currentScoreTeam1 = DEFAULT_SCORE;
-    currentScoreTeam2 = DEFAULT_SCORE;
-}
-
-
 
 
 
