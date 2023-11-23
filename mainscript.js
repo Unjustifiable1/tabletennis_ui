@@ -17,7 +17,8 @@ let i = DEFAULT_SCORE;  // Current Team Index
 let currentTeam = DEFAULT_TEAMS[i];
 let currentGame = DEFAULT_SCORE;
 let currentSet = DEFAULT_SCORE;
-let currentService = DEFAULT_TEAMS[i];
+let currentService = DEFAULT_TEAMS[0];
+let serviceToss = DEFAULT_TEAMS[0];
 
 let setWon = false;
 let matchWon = false;
@@ -39,6 +40,7 @@ const setCurrentSetPoints = () => currentSetPoints[i] ++;
 const setCurrentSet = () => currentSet ++;
 const setCurrentGame = () => currentGame ++;
 const setCurrentService = (newServer) => currentService = newServer;
+const setServiceToss = (newServer) => serviceToss = newServer;
 
 const setOptionMode = (newMode) => optionMode = newMode;
 const setOptionTotalGames = (newGames) => optionTotalGames = newGames;
@@ -105,6 +107,9 @@ const gamePlay = () => {
     console.log("Current Game: " + currentGame);
     console.log("Current Score: " + currentGameScore[0] + " v " + currentGameScore[1]);
     updateGameScreen();
+    if (currentGame % 2 == 0) {
+        serviceChange();
+    }
     if (currentGameScore[i] >= parseInt(optionTotalGames)-1) {
         gameWinner(currentGameScore[i]);
     }
@@ -159,6 +164,35 @@ const isMatchWon = () => {
         return true;
     }
 }
+
+
+
+// SERVICE SELECTION
+
+team1Service.onclick = () => {
+    i = 0;
+    team2Service.style.display = "none";
+    setServiceToss(DEFAULT_TEAMS[i]);
+    setCurrentService(serviceToss);
+} 
+
+team2Service.onclick = () => {
+    i = 1;
+    team1Service.style.display = "none";
+    setServiceToss(DEFAULT_TEAMS[i]);
+    setCurrentService(serviceToss);
+} 
+
+const serviceChange = () => {
+    if (team1Service.style.display === "block") {
+        team1Service.style.display = "none";
+        team2Service.style.display = "block";
+    } else {
+        team1Service.style.display = "block";
+        team2Service.style.display = "none";
+    }
+}
+
 
 
 
