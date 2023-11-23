@@ -15,8 +15,8 @@ let currentSetPoints = [DEFAULT_SCORE, DEFAULT_SCORE];
 
 let i = DEFAULT_SCORE;  // Current Team Index
 let currentTeam = DEFAULT_TEAMS[i];
-let currentSet = DEFAULT_SCORE;
 let currentGame = DEFAULT_SCORE;
+let currentSet = DEFAULT_SCORE;
 let currentService = DEFAULT_TEAMS[i];
 
 let setWon = false;
@@ -175,8 +175,8 @@ const isMatchWon = () => {
 
 const resetGameNum = () => currentGame = DEFAULT_SCORE;
 const resetGameScores = () => currentGameScore = [DEFAULT_SCORE, DEFAULT_SCORE];
-const resetSetNum = () => currentGame = DEFAULT_SCORE;
-const resetSetScores = () => currentGameScore = [DEFAULT_SCORE, DEFAULT_SCORE];
+const resetSetNum = () => currentSet = DEFAULT_SCORE;
+const resetSetScores = () => currentSetPoints = [DEFAULT_SCORE, DEFAULT_SCORE];
 
 const resetGame = () => {
     resetGameNum();
@@ -192,6 +192,7 @@ const resetMatch = () => {
     resetGame();
     resetSetNum();
     resetSetScores();
+    updateGameScreen();
 }
 
 
@@ -210,6 +211,7 @@ menuGames.onclick = () => {
         setOptionServerChange(DEFAULT_SERVER_CHANGE[1]);
         menuService.textContent = optionServerChange;
     }
+    resetMatch();
 }
 
 menuSets.onclick = () => {
@@ -231,6 +233,8 @@ menuSwap.onclick = () => {
         menuSwapOpt.textContent = optionSwap;
     }
 }
+
+btnReset.onclick = () => { resetMatch() };
 
 
 
