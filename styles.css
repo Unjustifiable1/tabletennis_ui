@@ -102,6 +102,10 @@ nav a:hover {
 
 }
 
+.ttPlayerWrapper {
+    box-sizing: content-box;
+}
+
 .ttPlayer {
     font-size: 1.5em;
     text-transform: uppercase;
@@ -109,32 +113,34 @@ nav a:hover {
     border: 2px solid var(--clr-neutral-white);
     border-radius: 3em;
     padding: 1em;
-    min-width: 250px;
-    max-width: 350px;
     white-space: nowrap;
     overflow: hidden;
 }
 
-.ttPlayer3, .ttPlayer2 {
+#t1p3, #t2p2 {
     position: absolute;
     top: 14%;
 }
 
-.ttPlayer1, .ttPlayer4 {
+#t1p1, #t2p4 {
     position: absolute;
     top: 72%;
 }
 
-.ttPlayer1, .ttPlayer3 {
+#t1p1, #t1p3 {
     left: 10%;
     text-align: left;
 }
 
-.ttPlayer2, .ttPlayer4 {
+#t2p2, #t2p4 {
     right: 10%;
     text-align: right;
 }
 
+input {
+    all: unset;
+    width: 250px;
+}
 
 
 
