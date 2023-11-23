@@ -6,7 +6,7 @@ const DEFAULT_SCORE = 0;
 const DEFAULT_TEAMS = ["Team1", "Team2"];
 const DEFAULT_MODE = ["singles", "doubles"];
 const DEFAULT_GAMES = ['11', '21'];
-const DEFAULT_SETS = ['3', '5', '7'];
+const DEFAULT_SETS = ['2', '3', '4', '5', '6', '7'];
 const DEFAULT_SERVER_CHANGE = ['2', '5'];
 const DEFAULT_SWAP = ['YES', 'NO'];
 
@@ -116,16 +116,21 @@ const gameWinner = (currentScore) => {
         setCurrentSet();
         setCurrentSetPoints();
         updateGameScreen();
-        resetGame();
     }
+    isMatchWon();
+    if (matchWon) {
+        updateGameScreen();
+    }
+    if (setWon || matchWon) { resetGame() };
 }
 
 const isSetWon = (currentScore) => {
+    console.log("Checking if set is won...");
     if (isDeuce() && !isLeadBy2()) {
-        console.log("checking if set is won... it's not");
+        console.log("Checking set... it's not won");
         return;
     } else if (currentScore >= parseInt(optionTotalGames) && isLeadBy2()) {
-        console.log("checking if set is won... winner");
+        console.log("Checking set... winner!");
         setWon = true;
         return;
     }
@@ -133,8 +138,8 @@ const isSetWon = (currentScore) => {
 
 const isDeuce = () => {
     if (currentGameScore[0] == currentGameScore[1]) {
-        console.log("Deuce")
         lateGame = true;
+        console.log("Deuce!! Late game active => Switch service after every point");
         return true;
     }
 }
@@ -147,7 +152,8 @@ const isLeadBy2 = () => {
 }
 
 const isMatchWon = () => {
-    if (currentSetPoints[i] == optionTotalSets - 1) {
+    console.log("Checking if match is won...");
+    if (currentSetPoints[i] == optionTotalSets) {
         console.log("Match won!!");
         matchWon = true
         return true;
@@ -168,19 +174,24 @@ const isMatchWon = () => {
 // GAME RESETS
 
 const resetGameNum = () => currentGame = DEFAULT_SCORE;
-const resetTeamScores = () => currentGameScore = [DEFAULT_SCORE, DEFAULT_SCORE];
+const resetGameScores = () => currentGameScore = [DEFAULT_SCORE, DEFAULT_SCORE];
+const resetSetNum = () => currentGame = DEFAULT_SCORE;
+const resetSetScores = () => currentGameScore = [DEFAULT_SCORE, DEFAULT_SCORE];
 
 const resetGame = () => {
     resetGameNum();
-    resetTeamScores();
+    resetGameScores();
+    if (setWon) { alert("Game winner is " + currentTeam) };
     setWon = false;
     lateGame = false;
-    alert("Game winner is " + currentTeam);
+    if (matchWon) { alert("Match WON by " + currentTeam + "!!") };
+    matchWon = false;
 }
 
 const resetMatch = () => {
     resetGame();
-    matchWon = true
+    resetSetNum();
+    resetSetScores();
 }
 
 
