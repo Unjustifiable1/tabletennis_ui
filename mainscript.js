@@ -16,7 +16,7 @@ let currentSetPoints = [DEFAULT_SCORE, DEFAULT_SCORE];
 let i = DEFAULT_SCORE;  // Current Team Index
 let currentTeam = DEFAULT_TEAMS[i];
 let currentGame = DEFAULT_SCORE;
-let currentSet = DEFAULT_SCORE;
+let currentSet = DEFAULT_SCORE + 1;
 let currentService = DEFAULT_TEAMS[0];
 let serviceToss = DEFAULT_TEAMS[0];
 
@@ -107,8 +107,8 @@ const gamePlay = () => {
     console.log("Current Game: " + currentGame);
     console.log("Current Score: " + currentGameScore[0] + " v " + currentGameScore[1]);
     updateGameScreen();
-    if (currentGame % 2 == 0) {
-        serviceChange();
+    if (currentGame === 2 || currentGame % 2 === 0) {
+        toggleService();
     }
     if (currentGameScore[i] >= parseInt(optionTotalGames)-1) {
         gameWinner(currentGameScore[i]);
@@ -121,6 +121,7 @@ const gameWinner = (currentScore) => {
         setCurrentSet();
         setCurrentSetPoints();
         updateGameScreen();
+        serviceChangeAfterSet();
     }
     isMatchWon();
     if (matchWon) {
@@ -135,7 +136,7 @@ const isSetWon = (currentScore) => {
         console.log("Checking set... it's not won");
         return;
     } else if (currentScore >= parseInt(optionTotalGames) && isLeadBy2()) {
-        console.log("Checking set... winner!");
+        console.log("Set winner!");
         setWon = true;
         return;
     }
@@ -167,13 +168,14 @@ const isMatchWon = () => {
 
 
 
-// SERVICE SELECTION
+// SERVICE SELECTION AND CHANGE
 
 team1Service.onclick = () => {
     i = 0;
     team2Service.style.display = "none";
     setServiceToss(DEFAULT_TEAMS[i]);
     setCurrentService(serviceToss);
+    console.log("set# " + currentSet + " currentService " + currentService + " serviceToss " + serviceToss);
 } 
 
 team2Service.onclick = () => {
@@ -181,22 +183,32 @@ team2Service.onclick = () => {
     team1Service.style.display = "none";
     setServiceToss(DEFAULT_TEAMS[i]);
     setCurrentService(serviceToss);
+    console.log("set# " + currentSet + " currentService " + currentService + " serviceToss " + serviceToss);
 } 
 
-const serviceChange = () => {
-    if (team1Service.style.display === "block") {
+const toggleService = () => {
+    if (currentService == DEFAULT_TEAMS[0]) {
+        currentService = DEFAULT_TEAMS[1];
         team1Service.style.display = "none";
         team2Service.style.display = "block";
     } else {
+        currentService = DEFAULT_TEAMS[0];
         team1Service.style.display = "block";
         team2Service.style.display = "none";
     }
+    console.log("set# " + currentSet + " currentService " + currentService + " serviceToss " + serviceToss);
 }
 
 
 
 
 // SET CHANGE
+
+const serviceChangeAfterSet = () => {
+    if (serviceToss == currentService) {
+        toggleService();
+    }
+}
 
 
 
