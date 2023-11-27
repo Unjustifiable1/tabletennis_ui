@@ -21,7 +21,7 @@
     font-weight: 400;
     text-align: center;
 
-    /* border: 1px solid red; */
+    /* border: 1px solid green; */
 }
 
 body { background-color: var(--clr-neutral-white); }
@@ -102,9 +102,9 @@ nav a:hover {
 
 }
 
-.ttPlayerWrapper {
-    box-sizing: content-box;
-}
+
+
+/* ttPlayer Names */
 
 .ttPlayer {
     font-size: 1.5em;
@@ -115,31 +115,35 @@ nav a:hover {
     padding: 1em;
     white-space: nowrap;
     overflow: hidden;
-}
-
-#t1p3, #t2p2 {
+    z-index: -10;
+    min-width: 150px;
+    max-width: 250px;
     position: absolute;
-    top: 14%;
+    
 }
 
-#t1p1, #t2p4 {
-    position: absolute;
-    top: 72%;
-}
-
-#t1p1, #t1p3 {
-    left: 10%;
+#t1p1 {
+    bottom: -20%;
+    left: -60%;
     text-align: left;
 }
 
-#t2p2, #t2p4 {
-    right: 10%;
+#t2p2 {
+    top: -20%;
+    right: -60%;
     text-align: right;
 }
 
-input {
-    all: unset;
-    width: 250px;
+#t1p3 {
+    top: -20%;
+    left: -60%;
+    text-align: left;
+}
+
+#t2p4 {
+    bottom: -20%;
+    right: -60%;
+    text-align: right;
 }
 
 
