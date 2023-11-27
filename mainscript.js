@@ -217,21 +217,51 @@ const isMatchWon = () => {
 
 // SERVICE SELECTION AND CHANGE
 
+
 team1Service.onclick = () => {
-    i = 0;
-    team2Service.style.display = "none";
-    setServiceToss(DEFAULT_TEAMS[i]);
-    setCurrentService(serviceToss);
-    console.log("set# " + currentSet + " currentService " + currentService + " serviceToss " + serviceToss);
-} 
+    let team = DEFAULT_TEAMS[0];
+    if (gameStats.setNumber === 0) {
+        team2Service.style.display = "none";
+        initiateService(team);
+        printInfo();
+    }
+}
 
 team2Service.onclick = () => {
-    i = 1;
-    team1Service.style.display = "none";
-    setServiceToss(DEFAULT_TEAMS[i]);
-    setCurrentService(serviceToss);
-    console.log("set# " + currentSet + " currentService " + currentService + " serviceToss " + serviceToss);
-} 
+    let team = DEFAULT_TEAMS[1];
+    if (gameStats.setNumber === 0) {
+        team1Service.style.display = "none";
+        initiateService(team);
+        printInfo();
+    }
+}
+
+const initiateService = (team) => {
+    gameStats.serviceToss = team;
+    gameStats.currentService = team;
+    gameStats.setNumber ++;
+}
+
+const newToggleService = () => {
+    
+}
+
+
+// team1Service.onclick = () => {
+//     i = 0;
+//     team2Service.style.display = "none";
+//     setServiceToss(DEFAULT_TEAMS[i]);
+//     setCurrentService(serviceToss);
+//     console.log("set# " + currentSet + " currentService " + currentService + " serviceToss " + serviceToss);
+// } 
+
+// team2Service.onclick = () => {
+//     i = 1;
+//     team1Service.style.display = "none";
+//     setServiceToss(DEFAULT_TEAMS[i]);
+//     setCurrentService(serviceToss);
+//     console.log("set# " + currentSet + " currentService " + currentService + " serviceToss " + serviceToss);
+// } 
 
 const toggleService = () => {
     if (currentService == DEFAULT_TEAMS[0]) {
