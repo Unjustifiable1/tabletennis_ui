@@ -80,18 +80,21 @@ const menuService = document.getElementById('ttMenuService').getElementsByTagNam
 team1Score.onclick = () => {
     let team = DEFAULT_TEAMS[0];
     newGamePlay(team);
-    console.log(arrGameHistory);
-    console.log(gameStats);
-    console.log(gameHistory);
+    printInfo();
 } 
 
 team2Score.onclick = () => {
     let team = DEFAULT_TEAMS[1];
     newGamePlay(team);
-    console.log(arrGameHistory);
-    console.log(gameStats);
-    console.log(gameHistory);
+    printInfo();
 } 
+
+const printInfo = () => {
+    console.log(`\nNext point... awarded to ${gameStats.pointWinner}`)
+    console.log(arrGameHistory[arrGameHistory.length - 1]);
+    console.log(`${gameStats.team1.teamScore} v ${gameStats.team2.teamScore}`);
+    console.log(gameHistory[gameHistory.length - 1]);
+}
 
 // team1Score.onclick = () => {
 //     i = 0;
@@ -106,11 +109,18 @@ team2Score.onclick = () => {
 // } 
 
 const updateGameScreen = () => {
-    team1Score.textContent = currentGameScore[0];
-    team2Score.textContent = currentGameScore[1];
+    team1Score.textContent = gameStats.team1.teamScore;
+    team2Score.textContent = gameStats.team2.teamScore;
 
-    team1Sets.textContent = currentSetPoints[0];
-    team2Sets.textContent = currentSetPoints[1];
+    team1Sets.textContent = gameStats.team1.teamSetPoints;
+    team2Sets.textContent = gameStats.team2.teamSetPoints;
+
+
+    // team1Score.textContent = currentGameScore[0];
+    // team2Score.textContent = currentGameScore[1];
+
+    // team1Sets.textContent = currentSetPoints[0];
+    // team2Sets.textContent = currentSetPoints[1];
 }
 
 
@@ -121,6 +131,7 @@ const newGamePlay = (team) => {
     gameStats.gameNumber ++;
     gameStats[team].teamScore ++;
     updateGameHistory();
+    updateGameScreen();
 }
 
 
@@ -347,7 +358,7 @@ const gameStats = {
     
     pointWinner: "",
     currentService: "",
-
+    
     setNumber: DEFAULT_SCORE,
     gameNumber: DEFAULT_SCORE,
     serviceToss: "",
