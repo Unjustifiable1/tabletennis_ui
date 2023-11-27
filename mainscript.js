@@ -80,15 +80,17 @@ const menuService = document.getElementById('ttMenuService').getElementsByTagNam
 team1Score.onclick = () => {
     let team = DEFAULT_TEAMS[0];
     newGamePlay(team);
+    console.log(arrGameHistory);
     console.log(gameStats);
+    console.log(gameHistory);
 } 
 
 team2Score.onclick = () => {
     let team = DEFAULT_TEAMS[1];
     newGamePlay(team);
-    console.log(arrGameHistory[-1]);
+    console.log(arrGameHistory);
     console.log(gameStats);
-    console.log(gameHistory[-1]);
+    console.log(gameHistory);
 } 
 
 // team1Score.onclick = () => {
@@ -118,7 +120,18 @@ const newGamePlay = (team) => {
     gameStats.pointWinner = team;
     gameStats.gameNumber ++;
     gameStats[team].teamScore ++;
-    
+    updateGameHistory();
+}
+
+
+const updateGameHistory = () => {
+    let thisGame = `Set: ${gameStats.setNumber} | Game: ${gameStats.gameNumber}`;
+    arrGameHistory.push(thisGame);
+
+    let constructor = {};
+    constructor[thisGame] = gameStats;
+
+    gameHistory.push(constructor);
 }
 
 
