@@ -3,7 +3,7 @@
 
 // SETUP DEFAULT VARIABLES
 const DEFAULT_SCORE = 0;
-const DEFAULT_TEAMS = ["Team1", "Team2"];
+const DEFAULT_TEAMS = ["team1", "team2"];
 const DEFAULT_MODE = ["singles", "doubles"];
 const DEFAULT_GAMES = ['11', '21'];
 const DEFAULT_SETS = ['2', '3', '4', '5', '6', '7'];
@@ -78,16 +78,30 @@ const menuService = document.getElementById('ttMenuService').getElementsByTagNam
 // DOM INTERACTIONS - GAME SCORES
 
 team1Score.onclick = () => {
-    i = 0;
-    currentTeam = DEFAULT_TEAMS[i];
-    gamePlay();
+    let team = DEFAULT_TEAMS[0];
+    newGamePlay(team);
+    console.log(gameStats);
 } 
 
 team2Score.onclick = () => {
-    i = 1;
-    currentTeam = DEFAULT_TEAMS[i];
-    gamePlay();
+    let team = DEFAULT_TEAMS[1];
+    newGamePlay(team);
+    console.log(arrGameHistory[-1]);
+    console.log(gameStats);
+    console.log(gameHistory[-1]);
 } 
+
+// team1Score.onclick = () => {
+//     i = 0;
+//     currentTeam = DEFAULT_TEAMS[i];
+//     gamePlay();
+// } 
+
+// team2Score.onclick = () => {
+//     i = 1;
+//     currentTeam = DEFAULT_TEAMS[i];
+//     gamePlay();
+// } 
 
 const updateGameScreen = () => {
     team1Score.textContent = currentGameScore[0];
@@ -95,6 +109,16 @@ const updateGameScreen = () => {
 
     team1Sets.textContent = currentSetPoints[0];
     team2Sets.textContent = currentSetPoints[1];
+}
+
+
+// NEW GAME PLAY CONTROL
+
+const newGamePlay = (team) => {
+    gameStats.pointWinner = team;
+    gameStats.gameNumber ++;
+    gameStats[team].teamScore ++;
+    
 }
 
 
@@ -296,14 +320,18 @@ btnOptions.onclick = () => {
 // GAME INFO CURRENT
 
 const gameStats = {
-    team1: ['Player1', 'Player3'],
-    team2: ['Player2', 'Player4'],
+    team1: {
+        teamNames: ['Player1', 'Player3'],
+        teamScore: DEFAULT_SCORE,
+        teamSetPoints: DEFAULT_SCORE,
+    },
 
-    team1Score: DEFAULT_SCORE,
-    team2Score: DEFAULT_SCORE,
-    team1SetPoints: DEFAULT_SCORE,
-    team2SetPoints: DEFAULT_SCORE,
-
+    team2: {
+        teamNames: ['Player2', 'Player4'],
+        teamScore: DEFAULT_SCORE,
+        teamSetPoints: DEFAULT_SCORE,
+    },
+    
     pointWinner: "",
     currentService: "",
 
@@ -323,25 +351,29 @@ const gameStats = {
 let arrGameHistory = ["Set: 0 | Game: 0",];
 
 
-const gameHistory = {
-    "Set: 0 | Game: 0": {
-        team1: ['Player1', 'Player3'],
-        team2: ['Player2', 'Player4'],
+const gameHistory = [
+    {"Set: 0 | Game: 0": {
+        team1: {
+            teamNames: ['Player1', 'Player3'],
+            teamScore: DEFAULT_SCORE,
+            teamSetPoints: DEFAULT_SCORE,
+        },
     
-        team1Score: 0,
-        team2Score: 0,
-        team1SetPoints: 0,
-        team2SetPoints: 0,
-
+        team2: {
+            teamNames: ['Player2', 'Player4'],
+            teamScore: DEFAULT_SCORE,
+            teamSetPoints: DEFAULT_SCORE,
+        },
+        
         pointWinner: "",
         currentService: "",
-
-        setNumber: 0,
-        gameNumber: 0,
+    
+        setNumber: DEFAULT_SCORE,
+        gameNumber: DEFAULT_SCORE,
         serviceToss: "",
-
+    
         setWon: false,
         matchWon: false,
         lateGame: false,
-    }
-};
+    }},
+];
