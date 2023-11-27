@@ -95,7 +95,6 @@ const updateGameScreen = () => {
 
     team1Sets.textContent = currentSetPoints[0];
     team2Sets.textContent = currentSetPoints[1];
-
 }
 
 
@@ -292,3 +291,57 @@ btnOptions.onclick = () => {
         btnMenu.style.display = "block";
     }
 } 
+
+
+// GAME INFO CURRENT
+
+const gameStats = {
+    team1: ['Player1', 'Player3'],
+    team2: ['Player2', 'Player4'],
+
+    team1Score: DEFAULT_SCORE,
+    team2Score: DEFAULT_SCORE,
+    team1SetPoints: DEFAULT_SCORE,
+    team2SetPoints: DEFAULT_SCORE,
+
+    pointWinner: "",
+    currentService: "",
+
+    setNumber: DEFAULT_SCORE,
+    gameNumber: DEFAULT_SCORE,
+    serviceToss: "",
+
+    setWon: false,
+    matchWon: false,
+    lateGame: false,
+};
+
+
+
+// GAME INFO HISTORY
+
+let arrGameHistory = ["Set: 0 | Game: 0",];
+
+
+const gameHistory = {
+    "Set: 0 | Game: 0": {
+        team1: ['Player1', 'Player3'],
+        team2: ['Player2', 'Player4'],
+    
+        team1Score: 0,
+        team2Score: 0,
+        team1SetPoints: 0,
+        team2SetPoints: 0,
+
+        pointWinner: "",
+        currentService: "",
+
+        setNumber: 0,
+        gameNumber: 0,
+        serviceToss: "",
+
+        setWon: false,
+        matchWon: false,
+        lateGame: false,
+    }
+};
