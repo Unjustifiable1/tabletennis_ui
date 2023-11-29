@@ -127,6 +127,10 @@ const updateGameScreen = () => {
 // NEW GAME PLAY CONTROL
 
 const newGamePlay = (team) => {
+    if (gameStats.serviceToss === "") {
+        alert("Please select who won the toss to start serving.");
+        return;
+    }
     gameStats.pointWinner = team;
     gameStats.gameNumber ++;
     gameStats[team].teamScore ++;
@@ -223,8 +227,9 @@ team1Service.onclick = () => {
     if (gameStats.setNumber === 0) {
         team2Service.style.display = "none";
         initiateService(team, DEFAULT_TEAMS[1]);
-        printInfo();
     }
+    updateGameHistory();
+    printInfo();
 }
 
 team2Service.onclick = () => {
@@ -232,8 +237,9 @@ team2Service.onclick = () => {
     if (gameStats.setNumber === 0) {
         team1Service.style.display = "none";
         initiateService(team, DEFAULT_TEAMS[0]);
-        printInfo();
     }
+    updateGameHistory();
+    printInfo();
 }
 
 const initiateService = (team, teamX) => {
