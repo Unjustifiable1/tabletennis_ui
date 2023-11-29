@@ -149,7 +149,7 @@ const newGamePlay = (team) => {
 
     // game winner?
     if (gameStats[team].teamScore >= parseInt(optionTotalGames)) {
-        gameWinner(gameStats[team].teamScore);
+        gameWinner(team);
     }
 
     updateGameHistory();
@@ -167,9 +167,9 @@ const updateGameHistory = () => {
     gameHistory.push(constructor);
 }
 
-const isLateGame = () => {
+// const isLateGame = () => {
 
-}
+// }
 
 
 // GAME PLAY CONTROL
@@ -188,33 +188,27 @@ const isLateGame = () => {
 //     }
 // }
 
-const gameWinner = (currentScore) => {
-    isSetWon(currentScore);
+const gameWinner = (team) => {
+    isSetWon(team);
     if (gameStats.setWon) {
-        setCurrentSet();
-        setCurrentSetPoints();
         updateGameScreen();
-        serviceChangeAfterSet();
     }
     isMatchWon();
     if (gameStats.matchWon) {
         updateGameScreen();
     }
     if (gameStats.setWon || gameStats.matchWon) { resetGame() };
+
+    initiateService(team);
 }
 
-const isSetWon = (currentScore) => {
-    if (currentScore >= parseInt(optionTotalGames) && isLeadBy2()) {
+const isSetWon = (team) => {
+    if (gameStats[team].teamScore >= parseInt(optionTotalGames) && isLeadBy2()) {
         gameStats.setWon = true;
+        gameStats[team].teamSetPoints ++;
+        gameStats.setNumber ++;
     }
 }
-
-// const isDeuce = () => {
-//     if (currentGameScore[0] == currentGameScore[1]) {
-//         console.log("Deuce!! Late game active => Switch service after every point");
-//         return true;
-//     }
-// }
 
 const isLeadBy2 = () => {
     if (Math.abs(gameStats.team1.teamScore - gameStats.team2.teamScore) >= 2) {
@@ -223,14 +217,14 @@ const isLeadBy2 = () => {
     }
 }
 
-// const isMatchWon = () => {
-//     console.log("Checking if match is won...");
-//     if (currentSetPoints[i] == optionTotalSets) {
-//         console.log("Match won!!");
-//         matchWon = true
-//         return true;
-//     }
-// }
+const isMatchWon = () => {
+    console.log("Checking if match is won...");
+    if (currentSetPoints[i] == optionTotalSets) {
+        console.log("Match won!!");
+        matchWon = true
+        return true;
+    }
+}
 
 
 
@@ -241,7 +235,7 @@ team1Service.onclick = () => {
     let team = DEFAULT_TEAMS[0];
     if (gameStats.setNumber === 0) {
         team2Service.style.display = "none";
-        initiateService(team, DEFAULT_TEAMS[1]);
+        initiateService(team);
     }
     updateGameHistory();
     printInfo();
@@ -251,15 +245,23 @@ team2Service.onclick = () => {
     let team = DEFAULT_TEAMS[1];
     if (gameStats.setNumber === 0) {
         team1Service.style.display = "none";
-        initiateService(team, DEFAULT_TEAMS[0]);
+        initiateService(team);
     }
     updateGameHistory();
     printInfo();
 }
 
-const initiateService = (team, teamX) => {
-    if (gameStats.setNumber === 0) { gameStats.serviceToss = team; gameStats.setWon = true; }
-    gameStats.setNumber % 2 === 0 ? gameStats.nextService = team : gameStats.currentService = teamX;
+const initiateService = (teamX) => {
+    let teamY = "";
+    if (teamX === DEFAULT_TEAMS[0]) {
+        teamY = DEFAULT_TEAMS[1];
+        console.log('teamY is ' + teamY);
+    } else {
+        teamY = DEFAULT_TEAMS[0];
+        console.log('teamY is ' + teamY);
+    }
+    if (gameStats.setNumber === 0) { gameStats.serviceToss = teamX; gameStats.setWon = true; }
+    gameStats.setNumber % 2 === 0 ? gameStats.nextService = teamX : gameStats.nextService = teamY;
     if (gameStats.setWon) { gameStats.setNumber ++; gameStats.setWon = false; };
 }
 
@@ -338,6 +340,7 @@ const resetMatch = () => {
     resetGame();
     resetSetNum();
     resetSetScores();
+    resetHistory();
     updateGameScreen();
 }
 
@@ -428,7 +431,7 @@ const gameStats = {
 let arrGameHistory = ["Set: 0 | Game: 0",];
 
 
-const gameHistory = [
+let gameHistory = [
     {"Set: 0 | Game: 0": {
         team1: {
             teamNames: ['Player1', 'Player3'],
