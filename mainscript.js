@@ -318,6 +318,11 @@ const resetGameNum = () => gameStats.gameNumber = DEFAULT_SCORE;
 const resetGameScores = () => {gameStats.team1.teamScore = DEFAULT_SCORE; gameStats.team2.teamScore = DEFAULT_SCORE;}
 const resetSetNum = () => gameStats.setNumber = DEFAULT_SCORE;
 const resetSetScores = () => {gameStats.team1.teamSetPoints = DEFAULT_SCORE; gameStats.team2.teamSetPoints = DEFAULT_SCORE;}
+const resetHistory = () => {
+    let history = [arrGameHistory[0], gameHistory[0]];
+    arrGameHistory = history[0];
+    gameHistory = history[1];
+}
 
 const resetGame = () => {
     resetGameNum();
