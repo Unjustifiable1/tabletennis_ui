@@ -17,7 +17,7 @@ let i = DEFAULT_SCORE;  // Current Team Index
 let currentTeam = DEFAULT_TEAMS[i];
 let currentGame = DEFAULT_SCORE;
 let currentSet = DEFAULT_SCORE + 1;
-let currentService = DEFAULT_TEAMS[0];
+let nextService = DEFAULT_TEAMS[0];
 let serviceToss = DEFAULT_TEAMS[0];
 
 let setWon = false;
@@ -39,7 +39,7 @@ const setCurrentSetPoints = () => currentSetPoints[i] ++;
 
 const setCurrentSet = () => currentSet ++;
 const setCurrentGame = () => currentGame ++;
-const setCurrentService = (newServer) => currentService = newServer;
+const setnextService = (newServer) => nextService = newServer;
 const setServiceToss = (newServer) => serviceToss = newServer;
 
 const setOptionMode = (newMode) => optionMode = newMode;
@@ -131,9 +131,15 @@ const newGamePlay = (team) => {
         alert("Please select who won the toss to start serving.");
         return;
     }
+
     gameStats.pointWinner = team;
     gameStats.gameNumber ++;
     gameStats[team].teamScore ++;
+
+    if (gameStats.gameNumber >= 2 && gameStats.gameNumber % 2 === 0) {
+        toggleService();
+    }
+
     updateGameHistory();
     updateGameScreen();
 }
@@ -152,70 +158,70 @@ const updateGameHistory = () => {
 
 // GAME PLAY CONTROL
 
-const gamePlay = () => {
-    setCurrentGame();
-    setCurrentGameScore();
-    console.log("Current Game: " + currentGame);
-    console.log("Current Score: " + currentGameScore[0] + " v " + currentGameScore[1]);
-    updateGameScreen();
-    if (currentGame === 2 || currentGame % 2 === 0) {
-        toggleService();
-    }
-    if (currentGameScore[i] >= parseInt(optionTotalGames)-1) {
-        gameWinner(currentGameScore[i]);
-    }
-}
+// const gamePlay = () => {
+//     setCurrentGame();
+//     setCurrentGameScore();
+//     console.log("Current Game: " + currentGame);
+//     console.log("Current Score: " + currentGameScore[0] + " v " + currentGameScore[1]);
+//     updateGameScreen();
+    // if (currentGame === 2 || currentGame % 2 === 0) {
+    //     toggleService();
+    // }
+//     if (currentGameScore[i] >= parseInt(optionTotalGames)-1) {
+//         gameWinner(currentGameScore[i]);
+//     }
+// }
 
-const gameWinner = (currentScore) => {
-    isSetWon(currentScore);
-    if (setWon) {
-        setCurrentSet();
-        setCurrentSetPoints();
-        updateGameScreen();
-        serviceChangeAfterSet();
-    }
-    isMatchWon();
-    if (matchWon) {
-        updateGameScreen();
-    }
-    if (setWon || matchWon) { resetGame() };
-}
+// const gameWinner = (currentScore) => {
+//     isSetWon(currentScore);
+//     if (setWon) {
+//         setCurrentSet();
+//         setCurrentSetPoints();
+//         updateGameScreen();
+//         serviceChangeAfterSet();
+//     }
+//     isMatchWon();
+//     if (matchWon) {
+//         updateGameScreen();
+//     }
+//     if (setWon || matchWon) { resetGame() };
+// }
 
-const isSetWon = (currentScore) => {
-    console.log("Checking if set is won...");
-    if (isDeuce() && !isLeadBy2()) {
-        console.log("Checking set... it's not won");
-        return;
-    } else if (currentScore >= parseInt(optionTotalGames) && isLeadBy2()) {
-        console.log("Set winner!");
-        setWon = true;
-        return;
-    }
-}
+// const isSetWon = (currentScore) => {
+//     console.log("Checking if set is won...");
+//     if (isDeuce() && !isLeadBy2()) {
+//         console.log("Checking set... it's not won");
+//         return;
+//     } else if (currentScore >= parseInt(optionTotalGames) && isLeadBy2()) {
+//         console.log("Set winner!");
+//         setWon = true;
+//         return;
+//     }
+// }
 
-const isDeuce = () => {
-    if (currentGameScore[0] == currentGameScore[1]) {
-        lateGame = true;
-        console.log("Deuce!! Late game active => Switch service after every point");
-        return true;
-    }
-}
+// const isDeuce = () => {
+//     if (currentGameScore[0] == currentGameScore[1]) {
+//         lateGame = true;
+//         console.log("Deuce!! Late game active => Switch service after every point");
+//         return true;
+//     }
+// }
 
-const isLeadBy2 = () => {
-    if (Math.abs(currentGameScore[0] - currentGameScore[1]) >= 2) {
-        console.log("Leading by 2")
-        return true;
-    }
-}
+// const isLeadBy2 = () => {
+//     if (Math.abs(currentGameScore[0] - currentGameScore[1]) >= 2) {
+//         console.log("Leading by 2")
+//         return true;
+//     }
+// }
 
-const isMatchWon = () => {
-    console.log("Checking if match is won...");
-    if (currentSetPoints[i] == optionTotalSets) {
-        console.log("Match won!!");
-        matchWon = true
-        return true;
-    }
-}
+// const isMatchWon = () => {
+//     console.log("Checking if match is won...");
+//     if (currentSetPoints[i] == optionTotalSets) {
+//         console.log("Match won!!");
+//         matchWon = true
+//         return true;
+//     }
+// }
 
 
 
@@ -244,13 +250,11 @@ team2Service.onclick = () => {
 
 const initiateService = (team, teamX) => {
     if (gameStats.setNumber === 0) { gameStats.serviceToss = team; gameStats.setWon = true; }
-    gameStats.setNumber % 2 === 0 ? gameStats.currentService = team : gameStats.currentService = teamX;
+    gameStats.setNumber % 2 === 0 ? gameStats.nextService = team : gameStats.currentService = teamX;
     if (gameStats.setWon) { gameStats.setNumber ++; gameStats.setWon = false; };
 }
 
-const newToggleService = () => {
 
-}
 
 
 // team1Service.onclick = () => {
@@ -270,16 +274,15 @@ const newToggleService = () => {
 // } 
 
 const toggleService = () => {
-    if (currentService == DEFAULT_TEAMS[0]) {
-        currentService = DEFAULT_TEAMS[1];
+    if (gameStats.nextService == DEFAULT_TEAMS[0]) {
+        gameStats.nextService = DEFAULT_TEAMS[1];
         team1Service.style.display = "none";
         team2Service.style.display = "block";
     } else {
-        currentService = DEFAULT_TEAMS[0];
+        gameStats.nextService = DEFAULT_TEAMS[0];
         team1Service.style.display = "block";
         team2Service.style.display = "none";
     }
-    console.log("set# " + currentSet + " currentService " + currentService + " serviceToss " + serviceToss);
 }
 
 
@@ -287,11 +290,11 @@ const toggleService = () => {
 
 // SET CHANGE
 
-const serviceChangeAfterSet = () => {
-    if (serviceToss == currentService) {
-        toggleService();
-    }
-}
+// const serviceChangeAfterSet = () => {
+//     if (serviceToss == currentService) {
+//         toggleService();
+//     }
+// }
 
 
 
@@ -393,7 +396,7 @@ const gameStats = {
     },
     
     pointWinner: "",
-    currentService: "",
+    nextService: "",
     
     setNumber: DEFAULT_SCORE,
     gameNumber: DEFAULT_SCORE,
@@ -426,7 +429,7 @@ const gameHistory = [
         },
         
         pointWinner: "",
-        currentService: "",
+        nextService: "",
     
         setNumber: DEFAULT_SCORE,
         gameNumber: DEFAULT_SCORE,
