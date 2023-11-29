@@ -136,8 +136,20 @@ const newGamePlay = (team) => {
     gameStats.gameNumber ++;
     gameStats[team].teamScore ++;
 
-    if (gameStats.gameNumber >= 2 && gameStats.gameNumber % 2 === 0) {
+    // toggle service
+    if (gameStats.gameNumber >= 2 && gameStats.gameNumber % 2 === 0 || gameStats.lateGame) {
         toggleService();
+    }
+
+    // is late game?
+    if (gameStats.team1.teamScore === parseInt(optionTotalGames)-1 && gameStats.team1.teamScore === gameStats.team2.teamScore) {
+        gameStats.lateGame = true;
+        alert("Deuce!! Switch service after every point!");
+    }
+
+    // game winner?
+    if (gameStats[team].teamScore >= parseInt(optionTotalGames)) {
+        gameWinner(gameStats[team].teamScore);
     }
 
     updateGameHistory();
@@ -153,6 +165,10 @@ const updateGameHistory = () => {
     constructor[thisGame] = gameStats;
 
     gameHistory.push(constructor);
+}
+
+const isLateGame = () => {
+
 }
 
 
@@ -172,47 +188,40 @@ const updateGameHistory = () => {
 //     }
 // }
 
-// const gameWinner = (currentScore) => {
-//     isSetWon(currentScore);
-//     if (setWon) {
-//         setCurrentSet();
-//         setCurrentSetPoints();
-//         updateGameScreen();
-//         serviceChangeAfterSet();
-//     }
-//     isMatchWon();
-//     if (matchWon) {
-//         updateGameScreen();
-//     }
-//     if (setWon || matchWon) { resetGame() };
-// }
+const gameWinner = (currentScore) => {
+    isSetWon(currentScore);
+    if (gameStats.setWon) {
+        setCurrentSet();
+        setCurrentSetPoints();
+        updateGameScreen();
+        serviceChangeAfterSet();
+    }
+    isMatchWon();
+    if (gameStats.matchWon) {
+        updateGameScreen();
+    }
+    if (gameStats.setWon || gameStats.matchWon) { resetGame() };
+}
 
-// const isSetWon = (currentScore) => {
-//     console.log("Checking if set is won...");
-//     if (isDeuce() && !isLeadBy2()) {
-//         console.log("Checking set... it's not won");
-//         return;
-//     } else if (currentScore >= parseInt(optionTotalGames) && isLeadBy2()) {
-//         console.log("Set winner!");
-//         setWon = true;
-//         return;
-//     }
-// }
+const isSetWon = (currentScore) => {
+    if (currentScore >= parseInt(optionTotalGames) && isLeadBy2()) {
+        gameStats.setWon = true;
+    }
+}
 
 // const isDeuce = () => {
 //     if (currentGameScore[0] == currentGameScore[1]) {
-//         lateGame = true;
 //         console.log("Deuce!! Late game active => Switch service after every point");
 //         return true;
 //     }
 // }
 
-// const isLeadBy2 = () => {
-//     if (Math.abs(currentGameScore[0] - currentGameScore[1]) >= 2) {
-//         console.log("Leading by 2")
-//         return true;
-//     }
-// }
+const isLeadBy2 = () => {
+    if (Math.abs(gameStats.team1.teamScore - gameStats.team2.teamScore) >= 2) {
+        console.log("Leading by 2")
+        return true;
+    }
+}
 
 // const isMatchWon = () => {
 //     console.log("Checking if match is won...");
@@ -305,19 +314,19 @@ const toggleService = () => {
 
 // GAME RESETS
 
-const resetGameNum = () => currentGame = DEFAULT_SCORE;
-const resetGameScores = () => currentGameScore = [DEFAULT_SCORE, DEFAULT_SCORE];
-const resetSetNum = () => currentSet = DEFAULT_SCORE;
-const resetSetScores = () => currentSetPoints = [DEFAULT_SCORE, DEFAULT_SCORE];
+const resetGameNum = () => gameStats.gameNumber = DEFAULT_SCORE;
+const resetGameScores = () => {gameStats.team1.teamScore = DEFAULT_SCORE; gameStats.team2.teamScore = DEFAULT_SCORE;}
+const resetSetNum = () => gameStats.setNumber = DEFAULT_SCORE;
+const resetSetScores = () => {gameStats.team1.teamSetPoints = DEFAULT_SCORE; gameStats.team2.teamSetPoints = DEFAULT_SCORE;}
 
 const resetGame = () => {
     resetGameNum();
     resetGameScores();
-    if (setWon) { alert("Game winner is " + currentTeam) };
-    setWon = false;
-    lateGame = false;
-    if (matchWon) { alert("Match WON by " + currentTeam + "!!") };
-    matchWon = false;
+    if (gameStats.setWon) { alert("Set winner is " + gameStats.pointWinner) };
+    gameStats.setWon = false;
+    gameStats.lateGame = false;
+    if (gameStats.matchWon) { alert("Match WON by " + gameStats.pointWinner + "!!") };
+    gameStats.matchWon = false;
 }
 
 const resetMatch = () => {
