@@ -222,7 +222,7 @@ team1Service.onclick = () => {
     let team = DEFAULT_TEAMS[0];
     if (gameStats.setNumber === 0) {
         team2Service.style.display = "none";
-        initiateService(team);
+        initiateService(team, DEFAULT_TEAMS[1]);
         printInfo();
     }
 }
@@ -231,19 +231,19 @@ team2Service.onclick = () => {
     let team = DEFAULT_TEAMS[1];
     if (gameStats.setNumber === 0) {
         team1Service.style.display = "none";
-        initiateService(team);
+        initiateService(team, DEFAULT_TEAMS[0]);
         printInfo();
     }
 }
 
-const initiateService = (team) => {
-    gameStats.serviceToss = team;
-    gameStats.currentService = team;
-    gameStats.setNumber ++;
+const initiateService = (team, teamX) => {
+    if (gameStats.setNumber === 0) { gameStats.serviceToss = team; gameStats.setWon = true; }
+    gameStats.setNumber % 2 === 0 ? gameStats.currentService = team : gameStats.currentService = teamX;
+    if (gameStats.setWon) { gameStats.setNumber ++; gameStats.setWon = false; };
 }
 
 const newToggleService = () => {
-    
+
 }
 
 
