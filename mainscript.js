@@ -320,10 +320,24 @@ const resetGameNum = () => gameStats.gameNumber = DEFAULT_SCORE;
 const resetGameScores = () => {gameStats.team1.teamScore = DEFAULT_SCORE; gameStats.team2.teamScore = DEFAULT_SCORE;}
 const resetSetNum = () => gameStats.setNumber = DEFAULT_SCORE;
 const resetSetScores = () => {gameStats.team1.teamSetPoints = DEFAULT_SCORE; gameStats.team2.teamSetPoints = DEFAULT_SCORE;}
+
 const resetHistory = () => {
     let history = [arrGameHistory[0], gameHistory[0]];
+
     arrGameHistory = history[0];
-    gameHistory = history[1];
+    console.log('1 Check history reset');
+    console.log(arrGameHistory);
+
+    gameHistory = [];
+    gameHistory.push(history[1]);
+    console.log('2 Check history reset');
+    console.log(gameHistory);
+
+    gameStats = gameHistory[0];
+    console.log('3 Check history reset');
+    console.log(gameStats);
+
+    // printInfo()
 }
 
 const resetGame = () => {
@@ -399,7 +413,7 @@ btnOptions.onclick = () => {
 
 // GAME INFO CURRENT
 
-const gameStats = {
+let gameStats = {
     team1: {
         teamNames: ['Player1', 'Player3'],
         teamScore: DEFAULT_SCORE,
